@@ -1,0 +1,189 @@
+pipeline {
+    agent any
+
+    environment {
+        SCANNER_HOME = tool 'sonar-scanner'
+    }
+
+    stages {
+        stage('Git Checkout') {
+            steps {
+                git branch: 'latest', url: 'https://github.com/ashaik65/Microservices-Project.git'
+            }
+        }
+
+        stage('Sonarqube') {
+            steps {
+                withSonarQubeEnv('sonar') {
+                    sh "$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=10-Tier -Dsonar.projectName=10-Tier -Dsonar.java.binaries=."
+                }
+            }
+        }
+
+        stage ('adservice'){
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        dir('/var/lib/jenkins/workspace/microservice/src/adservice') {
+                         sh "docker build -t ashaik65/adservice:latest ."
+                         sh "docker push ashaik65/adservice:latest"
+                         sh "docker rmi ashaik65/adservice:latest "
+}
+
+}
+                }
+            }
+        }
+        stage ('cartservice'){
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        dir('/var/lib/jenkins/workspace/microservice/src/cartservice/src/') {
+                         sh "docker build -t ashaik65/cartservice:latest ."
+                         sh "docker push ashaik65/cartservice:latest"
+                         sh "docker rmi ashaik65/cartservice:latest "
+}
+
+}
+                }
+            }
+        } 
+        stage ('checkoutservice'){
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        dir('/var/lib/jenkins/workspace/microservice/src/checkoutservice') {
+                         sh "docker build -t ashaik65/checkoutservice:latest ."
+                         sh "docker push ashaik65/checkoutservice:latest"
+                         sh "docker rmi ashaik65/checkoutservice:latest "
+}
+
+}
+                }
+            }
+        } 
+        stage ('currencyservice'){
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        dir('/var/lib/jenkins/workspace/microservice/src/currencyservice') {
+                         sh "docker build -t ashaik65/currencyservice:latest ."
+                         sh "docker push ashaik65/currencyservice:latest"
+                         sh "docker rmi ashaik65/currencyservice:latest "
+}
+
+}
+                }
+            }
+        }
+        stage ('emailservice'){
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        dir('/var/lib/jenkins/workspace/microservice/src/emailservice') {
+                         sh "docker build -t ashaik65/emailservice:latest ."
+                         sh "docker push ashaik65/emailservice:latest"
+                         sh "docker rmi ashaik65/emailservice:latest "
+}
+
+}
+                }
+            }
+        }
+        stage ('frontend'){
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        dir('/var/lib/jenkins/workspace/microservice/src/frontend') {
+                         sh "docker build -t ashaik65/frontend:latest ."
+                         sh "docker push ashaik65/frontend:latest"
+                         sh "docker rmi ashaik65/frontend:latest "
+}
+
+}
+                }
+            }
+        }
+        stage ('loadgenerator'){
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        dir('/var/lib/jenkins/workspace/microservice/src/loadgenerator') {
+                         sh "docker build -t ashaik65/loadgenerator:latest ."
+                         sh "docker push ashaik65/loadgenerator:latest"
+                         sh "docker rmi ashaik65/loadgenerator:latest "
+}
+
+}
+                }
+            }
+        }
+        stage ('paymentservice'){
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        dir('/var/lib/jenkins/workspace/microservice/src/paymentservice') {
+                         sh "docker build -t ashaik65/paymentservice:latest ."
+                         sh "docker push ashaik65/paymentservice:latest"
+                         sh "docker rmi ashaik65/paymentservice:latest "
+}
+
+}
+                }
+            }
+        }
+        stage ('productcatalogservice'){
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        dir('/var/lib/jenkins/workspace/microservice/src/productcatalogservice') {
+                         sh "docker build -t ashaik65/productcatalogservice:latest ."
+                         sh "docker push ashaik65/productcatalogservice:latest"
+                         sh "docker rmi ashaik65/productcatalogservice:latest "
+}
+
+}
+                }
+            }
+        } 
+        stage ('recommendationservice'){
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        dir('/var/lib/jenkins/workspace/microservice/src/recommendationservice') {
+                         sh "docker build -t ashaik65/recommendationservice:latest ."
+                         sh "docker push ashaik65/recommendationservice:latest"
+                         sh "docker rmi ashaik65/recommendationservice:latest "
+}
+
+}
+                }
+            }
+        }
+        stage ('shippingservice'){
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        dir('/var/lib/jenkins/workspace/microservice/src/shippingservice') {
+                         sh "docker build -t ashaik65/shippingservice:latest ."
+                         sh "docker push ashaik65/shippingservice:latest"
+                         sh "docker rmi ashaik65/shippingservice:latest "
+}
+
+}
+                }
+            }
+        }
+        stage('k8s-deploy'){
+            steps {
+                withKubeConfig(caCertificate: '', clusterName: 'eksdemo', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://5FDA85EE6A5FDD5B6CBBE958C0481C42.gr7.us-east-1.eks.amazonaws.com') {
+                         sh 'kubectl apply -f deployment-service.yml'
+                         sh 'kubectl get pods'
+                         sh 'kubectl get svc'     
+}  
+            }
+        }
+                                                                                  
+    }
+}
+

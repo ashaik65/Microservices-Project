@@ -25,25 +25,25 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-type productCatalog struct {
+type productCatalogStruct struct {
 	catalog pb.ListProductsResponse
 }
 
-func (p *productCatalog) Check(ctx context.Context, req *healthpb.HealthCheckRequest) (*healthpb.HealthCheckResponse, error) {
+func (p *productCatalogStruct) Check(ctx context.Context, req *healthpb.HealthCheckRequest) (*healthpb.HealthCheckResponse, error) {
 	return &healthpb.HealthCheckResponse{Status: healthpb.HealthCheckResponse_SERVING}, nil
 }
 
-func (p *productCatalog) Watch(req *healthpb.HealthCheckRequest, ws healthpb.Health_WatchServer) error {
+func (p *productCatalogStruct) Watch(req *healthpb.HealthCheckRequest, ws healthpb.Health_WatchServer) error {
 	return status.Errorf(codes.Unimplemented, "health check via Watch not implemented")
 }
 
-func (p *productCatalog) ListProducts(context.Context, *pb.Empty) (*pb.ListProductsResponse, error) {
+func (p *productCatalogStruct) ListProducts(context.Context, *pb.Empty) (*pb.ListProductsResponse, error) {
 	time.Sleep(extraLatency)
 
 	return &pb.ListProductsResponse{Products: p.parseCatalog()}, nil
 }
 
-func (p *productCatalog) GetProduct(ctx context.Context, req *pb.GetProductRequest) (*pb.Product, error) {
+func (p *productCatalogStruct) GetProduct(ctx context.Context, req *pb.GetProductRequest) (*pb.Product, error) {
 	time.Sleep(extraLatency)
 
 	var found *pb.Product
@@ -59,7 +59,7 @@ func (p *productCatalog) GetProduct(ctx context.Context, req *pb.GetProductReque
 	return found, nil
 }
 
-func (p *productCatalog) SearchProducts(ctx context.Context, req *pb.SearchProductsRequest) (*pb.SearchProductsResponse, error) {
+func (p *productCatalogStruct) SearchProducts(ctx context.Context, req *pb.SearchProductsRequest) (*pb.SearchProductsResponse, error) {
 	time.Sleep(extraLatency)
 
 	var ps []*pb.Product
@@ -73,7 +73,7 @@ func (p *productCatalog) SearchProducts(ctx context.Context, req *pb.SearchProdu
 	return &pb.SearchProductsResponse{Results: ps}, nil
 }
 
-func (p *productCatalog) parseCatalog() []*pb.Product {
+func (p *productCatalogStruct) parseCatalog() []*pb.Product {
 	if reloadCatalog || len(p.catalog.Products) == 0 {
 		err := readCatalogFile(&p.catalog)
 		if err != nil {

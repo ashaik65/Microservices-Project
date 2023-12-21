@@ -111,6 +111,7 @@ Kubernetes
 Kubernetes Cli
 Docker
 Docker-pipeline
+Docker-build step
 ```
 # SonarQube
 Create the token in sonarqube for that goto sonarqube -----> Click on Administration----->click on token and genrate the token
@@ -155,13 +156,31 @@ Also install docker like we install sonarqube for refernce see this screenshot c
 
 kubectl create ns webapps
 
-2. Create SA, Role, Rolebinding as given in our repo
+2. Create SA, Role, Rolebinding, Secret as given in our repo
 
 kubectl create -f sa.yaml
 
 kubectl create -f role.yaml
 
 kubectl create -f binding.yaml
+
+kubectl create -f secret.yaml
+
+Also configure kubernetes secret in jenkins creds 
+
+in secret kindly follow this steps to get secret 
+
+as we have created secret describe the secret and copy token from that secret and paste in our jenkins secret
+
+![Alt text](k8.png)
+
+
+Also genrate pipeline secret for this
+
+![Alt text](kubecomfig.png)
+
+click on genrate pipeline syntax and put in pipeline 
+
 
 # Now we need to do some pipeline releated things 
 

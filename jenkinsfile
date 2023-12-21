@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        dir('/var/lib/jenkins/workspace/microservice/src/adservice') {
+                        dir('/var/lib/jenkins/workspace/micorservices/src/adservice') {
                          sh "docker build -t ashaik65/adservice:latest ."
                          sh "docker push ashaik65/adservice:latest"
                          sh "docker rmi ashaik65/adservice:latest "
@@ -176,7 +176,7 @@ pipeline {
         }
         stage('k8s-deploy'){
             steps {
-                withKubeConfig(caCertificate: '', clusterName: 'eksdemo', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://5FDA85EE6A5FDD5B6CBBE958C0481C42.gr7.us-east-1.eks.amazonaws.com') {
+                withKubeConfig(caCertificate: '', clusterName: 'eksdemo', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://47F9DE47144797A551CB1E2A9C5038E5.gr7.us-east-1.eks.amazonaws.com') {
                          sh 'kubectl apply -f deployment-service.yml'
                          sh 'kubectl get pods'
                          sh 'kubectl get svc'     

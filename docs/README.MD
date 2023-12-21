@@ -117,4 +117,28 @@ Create the token in sonarqube for that goto sonarqube -----> Click on Administra
 
 ![Alt text](image.png)
 
+Goto Jenkins Dashboard → Manage Jenkins → Credentials → Add Secret Text. It should look like this
+
+![Alt text](image-1.png)
+
+After adding sonar token
+
+Click on Apply and Save
+
+The Configure System option is used in Jenkins to configure different server
+
+Global Tool Configuration is used to configure different tools that we install using Plugins
+
+We will install a sonar scanner in the tools.
+
+managed jenkins ------> Configure system ------> SonarQube servers mentioned the details as shown in snippet once done apply and save
+
+![Alt text](image-2.png)
+
+
+we also need SonarQube Scanner installations for that goto Manage jenkins-----> Tools -----> SonarQube Scanner installations fill the details like this after did this click on Apply and Save
+
+![Alt text](image-3.png)
+
+
 

@@ -158,7 +158,9 @@ kubectl create ns webapps
 2. Create SA, Role, Rolebinding as given in our repo
 
 kubectl create -f sa.yaml
+
 kubectl create -f role.yaml
+
 kubectl create -f binding.yaml
 
 # Now we need to do some pipeline releated things 

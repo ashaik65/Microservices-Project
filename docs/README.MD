@@ -141,4 +141,13 @@ we also need SonarQube Scanner installations for that goto Manage jenkins-----> 
 ![Alt text](image-3.png)
 
 
+# Docker
+
+Now add docker creds into jenkins credentials make sure create token in dockerhub registry and treat that as a password
+
+Also install docker like we install sonarqube for refernce see this screenshot
+
+![Alt text](<docker install.png>)
+
+
 

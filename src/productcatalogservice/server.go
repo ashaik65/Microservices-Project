@@ -46,6 +46,7 @@ import (
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 )
 
+var productCatalogInstance productCatalog
 var (
 	cat          pb.ListProductsResponse
 	catalogMutex *sync.Mutex
@@ -69,7 +70,7 @@ func init() {
 	}
 	log.Out = os.Stdout
 	catalogMutex = &sync.Mutex{}
-	err := readCatalogFile(&cat)
+	err := readCatalogFile(&productCatalogInstance.catalog)
 	if err != nil {
 		log.Warnf("could not parse product catalog")
 	}
@@ -144,7 +145,7 @@ func run(port string) string {
 		grpc.UnaryInterceptor(otelgrpc.UnaryServerInterceptor()),
 		grpc.StreamInterceptor(otelgrpc.StreamServerInterceptor()))
 
-	svc := &productCatalog{}
+		svc := &productCatalogInstance
 
 	pb.RegisterProductCatalogServiceServer(srv, svc)
 	healthpb.RegisterHealthServer(srv, svc)

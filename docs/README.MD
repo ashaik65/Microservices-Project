@@ -106,6 +106,7 @@ sudo chmod 777 /var/run/docker.sock
 docker run -d --name sonar -p 9000:9000 sonarqube:lts-community   # Access this with your ip on 9000
 
 11. Install Necessary Plugins in Jenkins:
+```
 
 ![Alt text](terraform-project.png)
 

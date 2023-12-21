@@ -145,9 +145,40 @@ we also need SonarQube Scanner installations for that goto Manage jenkins-----> 
 
 Now add docker creds into jenkins credentials make sure create token in dockerhub registry and treat that as a password
 
-Also install docker like we install sonarqube for refernce see this screenshot
+Also install docker like we install sonarqube for refernce see this screenshot click apply and save
 
 ![Alt text](<docker install.png>)
+
+# Kubernetes
+
+1. Create Namespace webapps
+
+kubectl create ns webapps
+
+2. Create SA, Role, Rolebinding as given in our repo
+
+kubectl create -f sa.yaml
+kubectl create -f role.yaml
+kubectl create -f binding.yaml
+
+# Now we need to do some pipeline releated things 
+
+1. github checkout stage how to do that
+
+![Alt text](pipeline.png)
+
+now go to pipeline syntax and generate pipeline syntax for github select this option
+
+![Alt text](github-1.png)
+
+After that click on genrate pipeline syntax copy that and paste in pipeline stage
+
+
+
+
+
+
+
 
 
 

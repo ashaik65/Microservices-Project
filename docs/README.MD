@@ -105,7 +105,16 @@ sudo chmod 777 /var/run/docker.sock
 
 docker run -d --name sonar -p 9000:9000 sonarqube:lts-community   # Access this with your ip on 9000
 
-11. Install Necessary Plugins in Jenkins:
+11. Install Necessary Plugins in Jenkins:	
+SonarQube Scanner
+Kubernetes
+Kubernetes Cli
+Docker
+Docker-pipeline
 ```
+# SonarQube
+Create the token in sonarqube for that goto sonarqube -----> Click on Administration----->click on token and genrate the token
+
+![Alt text](image.png)
 
 
